@@ -5,10 +5,10 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class UserException extends RuntimeException{
+public class BookStoreException extends RuntimeException{
     private String message;
 
-    public UserException(String string) {
+    public BookStoreException(String string) {
         this.message = string;
     }
 }

@@ -1,6 +1,6 @@
 package com.example.bookstore.dto;
 
-import com.example.bookstore.Entity.UserEntity;
+import com.example.bookstore.Entity.BookEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,27 +9,29 @@ import java.util.Optional;
 
 @Data
 @NoArgsConstructor
-public class ResponseDTO {
+public class ResponseBookDTO {
+
     private String message;
     private Object obj;
 
-    public ResponseDTO(String string, UserEntity response) {
+
+    public ResponseBookDTO(String string, BookEntity response) {
         this.message = string;
         this.obj = response;
     }
 
-    public ResponseDTO(String string1, List<UserEntity> response) {
+    public ResponseBookDTO(String string1, List<BookEntity> response) {
         this.message = string1;
         this.obj = response;
     }
 
-    public ResponseDTO(String string2, Optional<UserEntity> response) {
+    public ResponseBookDTO(String string2, Optional<BookEntity> response) {
         this.message = string2;
         this.obj = response;
     }
 
-    public ResponseDTO(String string3, String errMsg) {
+    public ResponseBookDTO(String string3, String s1) {
         this.message = string3;
-        this.obj = errMsg;
+        this.obj = s1;
     }
 }

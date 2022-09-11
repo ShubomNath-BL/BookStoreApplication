@@ -23,4 +23,6 @@ public interface IUserService {
 
 
     UserEntity findByToken(String token);
+
+    String loginUser(String email, String password);
 }

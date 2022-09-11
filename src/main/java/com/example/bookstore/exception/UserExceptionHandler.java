@@ -1,6 +1,6 @@
 package com.example.bookstore.exception;
 
-import com.example.bookstore.dto.ResponseDTO;
+import com.example.bookstore.dto.ResponseUserDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
@@ -14,13 +14,13 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class UserExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ResponseDTO> methodArgumentNotValidException
+    public ResponseEntity<ResponseUserDTO> methodArgumentNotValidException
             (MethodArgumentNotValidException exception){
         List<ObjectError> errorList = exception.getBindingResult().getAllErrors();
         List<String> errMsg = errorList.stream()
                 .map(ObjectError -> ObjectError.getDefaultMessage())
                 .collect(Collectors.toList());
-        ResponseDTO responseDTO = new ResponseDTO("Exception while processing Rest request", errMsg.toString());
-        return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
+        ResponseUserDTO responseUserDTO = new ResponseUserDTO("Exception while processing Rest request", errMsg.toString());
+        return new ResponseEntity<>(responseUserDTO, HttpStatus.BAD_REQUEST);
     }
 }

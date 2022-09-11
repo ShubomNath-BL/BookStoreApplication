@@ -2,7 +2,7 @@ package com.example.bookstore.service;
 
 import com.example.bookstore.Entity.UserEntity;
 import com.example.bookstore.dto.UserDTO;
-import com.example.bookstore.exception.UserException;
+import com.example.bookstore.exception.BookStoreException;
 import com.example.bookstore.repo.Repo;
 import com.example.bookstore.util.EmailSenderService;
 import com.example.bookstore.util.TokenUtil;
@@ -36,7 +36,8 @@ public class UserService implements IUserService{
 
     @Override
     public Optional<UserEntity> getById(long id) {
-        return repository.findById(id);
+        Optional<UserEntity> userEntity = repository.findById(id);
+        return userEntity;
     }
 
     @Override
@@ -54,7 +55,7 @@ public class UserService implements IUserService{
             return userEntity;
         }
         else {
-            throw new UserException("Id not found.....!");
+            throw new BookStoreException("Id not found.....!");
         }
     }
 
@@ -72,7 +73,7 @@ public class UserService implements IUserService{
            return userEntity;
         }
         else {
-            throw new UserException("Email not found");
+            throw new BookStoreException("Email not found");
         }
     }
 
@@ -92,7 +93,17 @@ public class UserService implements IUserService{
         if(userEntity.isPresent()){
             return userEntity.get();
         }else {
-            throw new UserException("Id not found");
+            throw new BookStoreException("Id not found");
+        }
+    }
+
+    @Override
+    public String loginUser(String email, String password) {
+        UserEntity userEntity = repository.findByEmail(email);
+        if(email.equals(userEntity.getEmail()) && password.equals(userEntity.getPassword())){
+            return "user has logged in successfully";
+        }else{
+            throw new BookStoreException("Credentials are invalid");
         }
     }
 }
