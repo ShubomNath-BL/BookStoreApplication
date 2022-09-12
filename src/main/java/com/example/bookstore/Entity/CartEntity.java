@@ -4,10 +4,7 @@ import com.example.bookstore.dto.CartDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "cart")
@@ -15,15 +12,20 @@ import javax.persistence.Table;
 @NoArgsConstructor
 public class CartEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int cartId;
-    private long userId;
-    private int bookId;
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "user_id")
+    private UserEntity userId;
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "book_id")
+    private BookEntity bookId;
     private int quantity;
 
-    public CartEntity(CartDTO cart) {
-        this.userId = cart.getUserId();
-        this.bookId = cart.getBookId();
-        this.quantity = cart.getQuantity();
+    public CartEntity(UserEntity userId, BookEntity bookId, int quantity) {
+        this.userId = userId;
+        this.bookId = bookId;
+        this.quantity = quantity;
     }
+
 }

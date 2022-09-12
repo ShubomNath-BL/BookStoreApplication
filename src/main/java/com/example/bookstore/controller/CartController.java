@@ -24,7 +24,7 @@ public class CartController {
     ICartService cartService;
 
     @PostMapping("/insert")
-    public ResponseEntity<ResponseCartDTO> insert(@Valid @RequestBody CartDTO cart){
+    public ResponseEntity<ResponseCartDTO> insert(@RequestBody CartDTO cart){
         CartEntity response = cartService.saveData(cart);
         ResponseCartDTO responseCartDTO = new ResponseCartDTO("Data inserted successfully", response);
         return new ResponseEntity<>(responseCartDTO, HttpStatus.OK);
@@ -33,6 +33,12 @@ public class CartController {
     public ResponseEntity<ResponseCartDTO> getAllData(){
         List<CartEntity> response = cartService.recieveList();
         ResponseCartDTO responseCartDTO = new ResponseCartDTO("All data in the cart", response);
+        return new ResponseEntity<>(responseCartDTO, HttpStatus.OK);
+    }
+    @GetMapping("/getbyuserID/{userId}")
+    public ResponseEntity<ResponseCartDTO> getByUserId(@PathVariable long userId){
+        Optional<CartEntity> response = cartService.getByUserId(userId);
+        ResponseCartDTO responseCartDTO = new ResponseCartDTO("Carts related to user id are:- ", response);
         return new ResponseEntity<>(responseCartDTO, HttpStatus.OK);
     }
     @GetMapping("/getbyID/{id}")
@@ -45,7 +51,7 @@ public class CartController {
     public ResponseEntity<ResponseCartDTO> delete(@PathVariable int id){
         cartService.deleteById(id);
         ResponseCartDTO responseCartDTO = new ResponseCartDTO("Data hsa been deleted:- ", "Deleted id: "+id);
-        return new ResponseEntity<>(responseCartDTO, HttpStatus.OK);
+        return new ResponseEntity<>(responseCartDTO, HttpStatus.GONE);
     }
     @PutMapping("/edit/{id}")
     public ResponseEntity<ResponseCartDTO> updateByID(@RequestBody CartDTO cartDTO, @PathVariable int id){

@@ -18,4 +18,6 @@ public interface ICartService {
     CartEntity updateData(CartDTO cartDTO, int id);
 
     CartEntity updateQuantity(CartDTO cartDTO, int id);
+
+    Optional<CartEntity> getByUserId(long userId);
 }
