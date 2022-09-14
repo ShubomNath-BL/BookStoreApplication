@@ -1,6 +1,5 @@
 package com.example.bookstore.Entity;
 
-import com.example.bookstore.dto.CartDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,24 +7,30 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "cart")
 @Data
 @NoArgsConstructor
-public class CartEntity {
+@Table(name = "orders")
+public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int cartId;
+    private int orderID;
+    private LocalDate orderDate;
+    private int price;
+    private int quantity;
     @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private UserEntity userId;
     @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "id")
     private BookEntity bookId;
-    private int quantity;
+    private boolean cancel;
 
-    public CartEntity(UserEntity userId, BookEntity bookId, int quantity) {
+    public OrderEntity(UserEntity userId, BookEntity bookId, int quantity, LocalDate orderDate, int price, boolean cancel) {
         this.userId = userId;
         this.bookId = bookId;
         this.quantity = quantity;
+        this.orderDate = orderDate;
+        this.price = price;
+        this.cancel = cancel;
     }
 }
